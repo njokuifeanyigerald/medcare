@@ -20,4 +20,8 @@
 1. Django web Framework
 2. pillow for image uploading
 3. vanilla javascript
+4. css
+5. bootstrap
+6. font-awesome
+7. jquery(minified file)
 
