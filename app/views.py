@@ -6,7 +6,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse, request
 from django.conf import settings
 from django.contrib import messages
-from .models import Appointments
+from .models import Appointments, Services, Personnel
 from django.views.generic import ListView
 import datetime
 # import django.template import 
@@ -15,6 +15,16 @@ from django.template.loader import get_template, render_to_string
 
 class Home(TemplateView):
     template_name = 'app/index.html'
+    # model = Services
+    def get_context_data(self, *args, **kwargs): 
+        context =  super().get_context_data(*args,**kwargs)
+        services = Services.objects.all()
+        personnel = Personnel.objects.all()
+        context.update({
+            'services':services,
+            'personnel': personnel
+        })
+        return context
 
     def post(self, request):
         name= request.POST.get('name')
@@ -69,7 +79,7 @@ class ManageAppointment(ListView):
         appointment = Appointments.objects.get(id=appointment_id)
         appointment.accepted = True
         appointment.accepted_date = datetime.datetime.now()
-        appointment.save()
+        
 
         data = {
             'fname': appointment.first_name,
@@ -85,6 +95,9 @@ class ManageAppointment(ListView):
         )
         email.content_subtype='html'
         email.send()
+        # incase the message fails
+        # first of all, send the email before saving the appointment as true
+        appointment.save()
  
         messages.info(self.request,f"You accepted the appointment of {appointment.first_name}", extra_tags="success")
         return redirect('manage-appointments')
@@ -97,3 +110,6 @@ class ManageAppointment(ListView):
             'title':'Manage Appointments'
         })
         return context
+
+class History(TemplateView):
+    template_name = 'app/history.html'
