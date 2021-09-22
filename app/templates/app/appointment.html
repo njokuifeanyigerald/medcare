@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Family Doctor: Get Appointment</title>
-  <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <link rel="stylesheet" href="css/styles.css" />
-  
-</head>
-
+{% extends 'app/base.html' %}
+{% block title %}Book an Appointment{% endblock %}
+{% block css %}
 <style>
     .card {
     padding: 30px 40px;
@@ -72,15 +60,8 @@
     }
 
 </style>
-
-<body>
-
-    <!-- <div class="card notification-card notification-invitation">
-        <div class="card-body">
-                <div class="card-title">Jane invited you to join </div>
-        </div>
-      </div> -->
-
+{% endblock %}
+{% block body %}
     <div class="container-fluid px-1 py-5 mx-auto">
         <div class="row d-flex justify-content-center">
             <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
@@ -90,7 +71,8 @@
                 <p class="blue-text">Use the following form to contact us and request an appointment..</p>
                 <div class="card">
                     
-                    <form class="form-card">
+                    <form class="form-card" method="POST" action="{% url 'appointment' %}">
+                        {% csrf_token %}
                         <div class="row justify-content-between text-left">
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                             <label class="form-control-label px-3">First name<span class="text-danger"> *</span>
@@ -115,7 +97,7 @@
 
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                              <label class="form-control-label px-3">Phone number<span class="text-danger"> *</span></label> 
-                              <input type="text" id="mob" name="mob" placeholder="" onblur="validate(4)"> 
+                              <input type="text" id="mob" name="number" placeholder="" onblur="validate(11)"> 
                             </div>
 
                         </div>
@@ -123,26 +105,23 @@
                         <div class="row justify-content-between text-left">
                             <div class="form-group col-12 flex-column d-flex"> 
                                 <label class="form-control-label px-3">Your request<span class="text-danger"> *</span></label> 
-                                <textarea type="text" id="ans" name="ans" placeholder="" onblur="validate(6)"></textarea> 
+                                <textarea type="text" id="ans" name="request" placeholder="" onblur="validate(6)"></textarea> 
                             </div>
                         </div>
-                        <div class="row justify-content-end">
-                            <div class="form-group col-sm-6"> <button type="submit" class="btn-block btn-primary">Send</button> </div>
+                        <div class=" text-center">
+                            <div class="form-group"> 
+                                <button type="submit"  class="btn btn-lg btn-outline-primary">Send</button> 
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
 
 
-  <!--  JQuery  -->
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <!--  Bootstrap tooltips  -->
-  <script type="text/javascript" src="js/popper.min.js"></script>
-  <!--  Bootstrap core JavaScript  -->
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  
+{% block js %} 
 <script>
 function validate(val) {
 v1 = document.getElementById("fname");
@@ -226,7 +205,6 @@ flag = flag1 && flag2 && flag3 && flag4 && flag5 && flag6;
 return flag;
 }
 </script>
-
-</body>
+{% endblock %}
 
 </html>

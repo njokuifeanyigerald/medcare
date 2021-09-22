@@ -1,7 +1,7 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% block body %} 
-  <div class="header" style="background: rgb(177, 177, 177) url('../../../static/img/header.png') no-repeat fixed center">
+  <div class="header" style="background: rgb(177, 177, 177) url('../../../static/img/Health-sign.png') no-repeat fixed center">
 
     <div class="container hero">
         <div class="row">
@@ -10,7 +10,7 @@
                 <p> At our Medical Center
                     we combine world class medicine
                     with compassionate care. </p>
-                    <a href="appointment.html" class="btn btn-light btn-lg action-button" type="button">Book an appointment</a>
+                    <a href="{% url 'appointment' %}" class="btn btn-light btn-lg action-button" type="button">Book an appointment</a>
             </div>
 
         </div>
@@ -83,8 +83,9 @@
           <div class="card border-0 shadow">
             <img src="{% static 'img/service1.jpg' %}" class="card-img-top" alt="...">
             <div class="card-body text-center">
-              <h5 class="card-title mb-0">Primary Care</h5>
-              <div class="card-text text-black-50">Your personalized medical professionals.</div>
+              <h5 class="card-title mb-0">General out-patient clinic:	</h5>
+              <div class="card-text text-black-50">Monday to Friday: 9am - 5pm </div>
+              <p class="text-muted">Saturdays: 9am to 2p.m</p>
             </div>
           </div>
         </div>
@@ -136,7 +137,9 @@
           <!-- Wrapper for carousel items -->
           <div class="carousel-inner">		
               <div class="carousel-item active">
-                  <div class="img-box"><img src="{% static 'img/patient1.jpg' %}" alt=""></div>
+                  <div class="img-box">
+                    <img src="{% static 'img/mother.jpg' %}" alt="">
+                  </div>
                   <p class="testimonial">Phasellus vitae suscipit justo. Mauris pharetra feugiat ante id lacinia. Etiam faucibus mauris id tempor egestas. Duis luctus turpis at accumsan tincidunt. Phasellus risus risus, volutpat vel tellus ac, tincidunt fringilla massa. Etiam hendrerit dolor eget rutrum.</p>
                   <p class="overview">Michael Holz</p>
               </div>
@@ -190,8 +193,6 @@
     
           </div>
           <!-- end row -->
-    
-    
           <div class="row">
             <div class="col-sm-6">
               <div class="contact-map">
@@ -199,11 +200,10 @@
                 width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
               </div>
             </div><!-- end col -->
-    
             <!-- Contact form -->
             <div class="col-sm-6">
-              <form role="form" name="ajax-form" id="ajax-form" method="post" class="form-main">
-    
+              <form role="form" action="{% url 'home' %}" name="ajax-form" id="ajax-form" method="POST" class="form-main">
+                {% csrf_token %}
                 <div class="form-group">
                   <label for="name2">Name</label>
                   <input class="form-control" id="name2" name="name" type="text" placeholder="name">
